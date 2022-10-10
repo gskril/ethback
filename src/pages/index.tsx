@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useState } from 'react'
 
 export default function Home() {
-  const [msg, setMsg] = useState('hi')
+  const [msg, setMsg] = useState<string>('')
   return (
     <>
       <Head>
@@ -15,17 +15,33 @@ export default function Home() {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="input-group">
             <label htmlFor="address">ERC-20 Contract Address</label>
-            <input type="text" name="address" id="address" autoComplete="off" />
+            <input
+              type="text"
+              name="address"
+              id="address"
+              autoComplete="off"
+              placeholder="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
+            />
           </div>
 
           <div className="input-group">
             <label htmlFor="start-block">Start block</label>
-            <input type="number" name="start-block" id="start-block" />
+            <input
+              type="number"
+              name="start-block"
+              id="start-block"
+              placeholder="15500000"
+            />
           </div>
 
           <div className="input-group">
             <label htmlFor="end-block">End block</label>
-            <input type="number" name="end-block" id="end-block" />
+            <input
+              type="number"
+              name="end-block"
+              id="end-block"
+              placeholder="15700000"
+            />
           </div>
 
           <button>Fetch gas costs</button>
