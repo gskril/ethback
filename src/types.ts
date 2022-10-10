@@ -34,3 +34,8 @@ export type SortResponse = {
     status: string
   }
 }
+
+export type TransactionProps = {
+  addresses: string[]
+  values: number[]
+}
