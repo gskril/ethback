@@ -2,8 +2,9 @@ import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
-  rows: Object[]
-  meta: Object
+  rows?: Object[]
+  meta?: Object
+  error?: string
 }
 
 type SortResponse = {
@@ -27,7 +28,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const address = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+  let { address, start_block, end_block } = req.query
+
+  address = address ?? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+  start_block = start_block ?? '0'
+  end_block = end_block ?? '20000000'
+
   const sortQuery = `
     select
       "from",
@@ -38,6 +44,8 @@ export default async function handler(
     where
         "to" = '${address}'
         and t.function.name like 'delegate'
+        and block_number > ${start_block}
+        and block_number < ${end_block}
     order by
       timestamp desc
   `
