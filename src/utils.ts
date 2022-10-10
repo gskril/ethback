@@ -29,7 +29,7 @@ export async function handleSubmit({
   setMsg(
     `${totalSpentOnGas.toFixed(2)} ETH spent on gas from ${
       res!.rows!.length
-    } voters`
+    } delegations`
   )
 
   const addresses = res!.rows!.map((row) => row.from)
