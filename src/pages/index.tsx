@@ -1,9 +1,13 @@
 import Head from 'next/head'
-import { useState } from 'react'
-import { Response, VotesApiResponse } from './api/votes'
+import { useEffect, useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { Response, VotesApiResponse } from '../types'
+import { FormProps } from '../types'
 
 export default function Home() {
   const [msg, setMsg] = useState<string>('')
+  const [values, setValues] = useState<number[]>([])
+  const [addresses, setAddresses] = useState<string[]>([])
 
   return (
     <>
@@ -14,7 +18,13 @@ export default function Home() {
       </Head>
 
       <main>
-        <form onSubmit={(e) => handleSubmit(e, setMsg)}>
+        <ConnectButton showBalance={false} />
+        <form
+          style={{ marginTop: '1rem' }}
+          onSubmit={(event) =>
+            handleSubmit({ event, setMsg, setAddresses, setValues })
+          }
+        >
           <div className="input-group">
             <label htmlFor="address">ERC-20 Contract Address</label>
             <input
@@ -57,7 +67,12 @@ export default function Home() {
   )
 }
 
-async function handleSubmit(e: React.FormEvent, setMsg: Function) {
+async function handleSubmit({
+  event: e,
+  setMsg,
+  setAddresses,
+  setValues,
+}: FormProps) {
   e.preventDefault()
   const form = e.target as HTMLFormElement
   const address: string =
@@ -72,6 +87,8 @@ async function handleSubmit(e: React.FormEvent, setMsg: Function) {
     .then((res) => res.json())
     .catch((err) => setMsg(err.message))
 
+  console.log(res.rows)
+
   const totalSpentOnGas = res!.rows!.reduce(
     (acc: number, curr: Response) => acc + curr.gas,
     0
@@ -82,5 +99,9 @@ async function handleSubmit(e: React.FormEvent, setMsg: Function) {
     } voters. Check the console for more details.`
   )
 
-  console.log(res)
+  const addresses = res!.rows!.map((row) => row.from)
+  const values = res!.rows!.map((row) => row.gas)
+
+  setAddresses(addresses)
+  setValues(values)
 }

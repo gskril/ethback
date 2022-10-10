@@ -1,35 +1,6 @@
 import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-export type VotesApiResponse = {
-  rows?: Response[]
-  meta?: Object
-  error?: string
-}
-
-export type Response = {
-  from: string
-  block_number: number
-  gas: number
-}
-
-type SortResponse = {
-  id: string
-  success: number
-  query_response: {
-    collections: string[]
-    aliases: string[]
-    column_fields: Object[]
-
-    results: Response[]
-    query_id: string
-    stats: {
-      elapsed_time_ms: number
-      throttled_time_micros: number
-    }
-    status: string
-  }
-}
+import type { SortResponse, VotesApiResponse } from '../../types'
 
 export default async function handler(
   req: NextApiRequest,
