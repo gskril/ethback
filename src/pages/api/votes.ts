@@ -51,6 +51,7 @@ export default async function handler(
         and block_number < ${end_block}
     order by
       timestamp desc
+    LIMIT 500
   `
 
   const data: SortResponse = await got('https://api.sort.xyz/v0/sql', {
