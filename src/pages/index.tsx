@@ -1,11 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
-
 import { handleSubmit } from '../utils'
-import { TransactionProps } from '../types'
-import disperseAbi from '../contracts/disperse-abi.json'
+import Transaction from '../components/Transaction'
 
 export default function Home() {
   const [msg, setMsg] = useState<string>('')
@@ -33,7 +29,6 @@ export default function Home() {
               type="text"
               name="address"
               id="address"
-              autoComplete="off"
               disabled
               value="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
               placeholder="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
@@ -71,30 +66,4 @@ export default function Home() {
       </main>
     </>
   )
-}
-
-function Transaction({ addresses, values }: TransactionProps) {
-  const { isConnected } = useAccount()
-
-  const formattedValues = values.map((value) =>
-    Math.floor(value / 0.000000000000000001)
-  )
-
-  const { config } = usePrepareContractWrite({
-    addressOrName: '0xD152f549545093347A162Dce210e7293f1452150',
-    contractInterface: disperseAbi,
-    functionName: 'disperseEther',
-    args: [addresses, formattedValues],
-    overrides: {
-      value: formattedValues.reduce((a, b) => a + b, 0).toString(),
-    },
-  })
-
-  const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
-  if (isConnected) {
-    return <button onClick={() => write?.()}>Submit transaction</button>
-  } else {
-    return <ConnectButton showBalance={false} />
-  }
 }
