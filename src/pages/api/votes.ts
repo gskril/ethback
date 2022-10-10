@@ -1,10 +1,16 @@
 import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  rows?: Object[]
+export type VotesApiResponse = {
+  rows?: Response[]
   meta?: Object
   error?: string
+}
+
+export type Response = {
+  from: string
+  block_number: number
+  gas: number
 }
 
 type SortResponse = {
@@ -14,7 +20,8 @@ type SortResponse = {
     collections: string[]
     aliases: string[]
     column_fields: Object[]
-    results: Object[]
+
+    results: Response[]
     query_id: string
     stats: {
       elapsed_time_ms: number
@@ -26,13 +33,9 @@ type SortResponse = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<VotesApiResponse>
 ) {
-  let { address, start_block, end_block } = req.query
-
-  address = address ?? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
-  start_block = start_block ?? '0'
-  end_block = end_block ?? '20000000'
+  const { address, start_block, end_block } = req.query
 
   const sortQuery = `
     select
