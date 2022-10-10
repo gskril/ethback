@@ -30,7 +30,14 @@ label {
 }
 
 .input-group {
-  display: grid;
   gap: 0.5rem;
-  grid-template-columns: 4fr 5fr;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .input-group {
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+  }
 }
