@@ -51,7 +51,7 @@ export default function Home() {
               type="number"
               name="end-block"
               id="end-block"
-              placeholder="15700000"
+              placeholder="20000000"
             />
           </div>
 

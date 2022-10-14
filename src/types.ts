@@ -13,7 +13,6 @@ export type VotesApiResponse = {
 
 export type Response = {
   from: string
-  block_number: number
   gas: number
 }
 

@@ -11,10 +11,9 @@ export default async function handler(
   const sortQuery = `
     select
       "from",
-      "block_number",
       t.gas.transaction_fee.eth as gas
     from
-      ethereum.transaction t
+      user14.transaction t
     where
         "to" = '${address}'
         and t.function.name like 'delegate'
@@ -22,7 +21,7 @@ export default async function handler(
         and block_number < ${end_block}
     order by
       timestamp desc
-    LIMIT 500
+    LIMIT 10000
   `
 
   const data: SortResponse = await got('https://api.sort.xyz/v0/sql', {
