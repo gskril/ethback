@@ -30,7 +30,6 @@ export default function Home() {
               name="address"
               id="address"
               disabled
-              value="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
               placeholder="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
             />
           </div>
@@ -41,7 +40,7 @@ export default function Home() {
               type="number"
               name="start-block"
               id="start-block"
-              placeholder="15500000"
+              placeholder="15000000"
             />
           </div>
 
@@ -55,7 +54,14 @@ export default function Home() {
             />
           </div>
 
-          <button>Fetch gas costs</button>
+          <div className="button-group">
+            <button name="fetch" id="delegate">
+              Fetch delegation costs
+            </button>
+            <button name="fetch" id="castVote">
+              Fetch voting costs
+            </button>
+          </div>
         </form>
 
         <p className="msg">{msg}</p>

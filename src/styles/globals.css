@@ -35,9 +35,23 @@ label {
   flex-direction: column;
 }
 
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.button-group > button {
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .input-group {
     display: grid;
     grid-template-columns: 4fr 5fr;
+  }
+
+  .button-group {
+    flex-direction: row;
   }
 }

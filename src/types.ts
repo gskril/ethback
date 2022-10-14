@@ -38,3 +38,5 @@ export type TransactionProps = {
   addresses: string[]
   values: number[]
 }
+
+export type contractFunctions = 'castVote' | 'delegate'

@@ -6,7 +6,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VotesApiResponse>
 ) {
-  const { address, start_block, end_block } = req.query
+  const { address, start_block, end_block, submitter } = req.query
 
   const sortQuery = `
     select
@@ -16,7 +16,7 @@ export default async function handler(
       user14.transaction t
     where
         "to" = '${address}'
-        and t.function.name like 'delegate'
+        and t.function.name like '${submitter}'
         and block_number > ${start_block}
         and block_number < ${end_block}
     order by
