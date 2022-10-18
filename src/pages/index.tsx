@@ -65,9 +65,13 @@ export default function Home() {
               type="text"
               name="address"
               id="address"
-              disabled
               defaultValue={placeholderAddress}
               placeholder={placeholderAddress}
+              onBlur={() =>
+                alert(
+                  'Non-ENS contracts are currently limited to 7 days of transaction history.'
+                )
+              }
             />
           </div>
 
