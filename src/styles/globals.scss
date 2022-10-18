@@ -44,10 +44,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
 
-.button-group > button {
-  width: 100%;
+  & > button {
+    width: 100%;
+  }
 }
 
 .col {
@@ -62,23 +62,23 @@ button {
   position: relative;
   align-items: center;
   justify-content: center;
-}
 
-.radio-group > label {
-  width: 100%;
-  text-align: center;
-}
+  & > label {
+    width: 100%;
+    text-align: center;
+  }
 
-.radio-group > input:checked + label {
-  background: #ccc;
-}
+  & > input {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
 
-.radio-group > input {
-  top: 0;
-  left: 0;
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
+    &:checked + label {
+      background: #ccc;
+    }
+  }
 }
 
 @media screen and (min-width: 35em) {
