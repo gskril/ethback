@@ -19,6 +19,12 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     overrides: {
       value: formattedValues.reduce((a, b) => a + b, 0).toString(),
     },
+    onError: (err) => {
+      const msg = err.message.includes('insufficient funds')
+        ? 'Insufficient funds'
+        : 'Error preparing transaction, try a smaller block range'
+      alert(msg)
+    },
   })
 
   const { write } = useContractWrite(config)

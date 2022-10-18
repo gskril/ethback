@@ -29,6 +29,11 @@ label {
   padding-right: 0.5rem;
 }
 
+input,
+button {
+  font-size: inherit;
+}
+
 .input-group {
   gap: 0.5rem;
   display: flex;
@@ -45,10 +50,41 @@ label {
   width: 100%;
 }
 
-@media screen and (min-width: 768px) {
+.col {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.radio-group {
+  width: 100%;
+  border: 1px solid #ccc;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-group > label {
+  width: 100%;
+  text-align: center;
+}
+
+.radio-group > input:checked + label {
+  background: #ccc;
+}
+
+.radio-group > input {
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+@media screen and (min-width: 35em) {
   .input-group {
     display: grid;
-    grid-template-columns: 4fr 5fr;
+    grid-template-columns: 3fr 5fr;
   }
 
   .button-group {

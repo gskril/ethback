@@ -1,12 +1,21 @@
-import Head from 'next/head'
-import { useState } from 'react'
 import { handleSubmit } from '../utils'
+import { useState } from 'react'
+import Head from 'next/head'
+
+import { ContractFunctions } from '../types'
 import Transaction from '../components/Transaction'
 
 export default function Home() {
   const [msg, setMsg] = useState<string>('')
   const [values, setValues] = useState<number[]>([])
   const [addresses, setAddresses] = useState<string[]>([])
+  const [typeSelection, setTypeSelection] =
+    useState<ContractFunctions>('delegate')
+
+  const placeholderAddress =
+    typeSelection === 'delegate'
+      ? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+      : '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
 
   return (
     <>
@@ -24,13 +33,41 @@ export default function Home() {
           }
         >
           <div className="input-group">
-            <label htmlFor="address">ERC-20 Contract Address</label>
+            <label htmlFor="addresses">Transaction type</label>
+            <div className="col">
+              <div className="radio-group">
+                <input
+                  type="radio"
+                  name="type"
+                  value="delegate"
+                  id="delegate"
+                  defaultChecked
+                  onChange={() => setTypeSelection('delegate')}
+                />
+                <label htmlFor="delegate">Delegations</label>
+              </div>
+              <div className="radio-group">
+                <input
+                  type="radio"
+                  name="type"
+                  value="castVote"
+                  id="castVote"
+                  onChange={() => setTypeSelection('castVote')}
+                />
+                <label htmlFor="castVote">Votes</label>
+              </div>
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="address">Contract Address</label>
             <input
               type="text"
               name="address"
               id="address"
               disabled
-              placeholder="0xc18360217d8f7ab5e7c516566761ea12ce7f9d72"
+              defaultValue={placeholderAddress}
+              placeholder={placeholderAddress}
             />
           </div>
 
@@ -40,7 +77,8 @@ export default function Home() {
               type="number"
               name="start-block"
               id="start-block"
-              placeholder="15000000"
+              defaultValue={15100000}
+              placeholder="15100000"
             />
           </div>
 
@@ -54,14 +92,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="button-group">
-            <button name="fetch" id="delegate">
-              Fetch delegation costs
-            </button>
-            <button name="fetch" id="castVote">
-              Fetch voting costs
-            </button>
-          </div>
+          <button type="submit">Fetch gas costs</button>
         </form>
 
         <p className="msg">{msg}</p>

@@ -39,4 +39,4 @@ export type TransactionProps = {
   values: number[]
 }
 
-export type contractFunctions = 'castVote' | 'delegate'
+export type ContractFunctions = 'castVote' | 'delegate'
