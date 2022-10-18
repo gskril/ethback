@@ -1,8 +1,8 @@
 import { Button, Input, Typography } from '@ensdomains/thorin'
-import { css } from 'styled-components'
 import { handleSubmit } from '../utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import styled, { css } from 'styled-components'
 
 import { ContractFunctions } from '../types'
 import Transaction from '../components/Transaction'
@@ -11,10 +11,20 @@ const inputStyles = css`
   background: #fff;
 `
 
+const Label = styled(Typography)(
+  ({ theme }) => css`
+    color: ${theme.colors.textTertiary};
+    letter-spacing: normal;
+    padding: 0 1rem;
+    margin-bottom: 0.5rem;
+  `
+)
+
 export default function Home() {
   const [msg, setMsg] = useState<string>('')
   const [values, setValues] = useState<number[]>([])
   const [addresses, setAddresses] = useState<string[]>([])
+  const [contractAddress, setContractAddress] = useState<string>('')
   const [typeSelection, setTypeSelection] =
     useState<ContractFunctions>('delegate')
 
@@ -37,8 +47,8 @@ export default function Home() {
             handleSubmit({ event, setMsg, setAddresses, setValues })
           }}
         >
-          <div className="input-group">
-            <label htmlFor="addresses">Transaction type</label>
+          <div>
+            <Label weight="bold">Transaction type</Label>
             <div className="col">
               <div className="radio-group">
                 <input
@@ -64,29 +74,24 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="input-group-thorin">
+          <div>
             <Input
               type="text"
               name="address"
               id="address"
-              label="Contract Address"
+              label="Contract address"
               parentStyles={inputStyles}
-              value={placeholderAddress}
+              value={contractAddress}
               placeholder={placeholderAddress}
-              onBlur={() =>
-                alert(
-                  'Non-ENS contracts are currently limited to 7 days of transaction history.'
-                )
-              }
+              onChange={(e) => setContractAddress(e.target.value)}
             />
           </div>
 
-          <div className="input-group-thorin">
+          <div>
             <Input
               type="number"
               name="start-block"
               id="start-block"
-              value={15100000}
               step={10000}
               min={0}
               placeholder="15100000"
@@ -95,7 +100,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="input-group-thorin">
+          <div>
             <Input
               type="number"
               name="end-block"

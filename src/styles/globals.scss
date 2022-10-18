@@ -25,20 +25,27 @@ form {
 
 .col {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .radio-group {
   width: 100%;
-  border: 1px solid #ccc;
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   & > label {
     width: 100%;
     text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    color: rgb(0, 0, 0, 0.8);
+    border: 0.1875rem solid #fff;
   }
 
   & > input {
@@ -47,20 +54,11 @@ form {
     opacity: 0;
     visibility: hidden;
     position: absolute;
+    border: none;
 
     &:checked + label {
-      background: #ccc;
+      font-weight: 700;
+      border-color: rgb(82, 152, 255);
     }
-  }
-}
-
-@media screen and (min-width: 35em) {
-  .input-group {
-    display: grid;
-    grid-template-columns: 3fr 5fr;
-  }
-
-  .button-group {
-    flex-direction: row;
   }
 }
