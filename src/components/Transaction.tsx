@@ -3,6 +3,7 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 import { TransactionProps } from '../types'
 import disperseAbi from '../contracts/disperse-abi.json'
+import { Button } from '@ensdomains/thorin'
 
 export default function Transaction({ addresses, values }: TransactionProps) {
   const { isConnected } = useAccount()
@@ -30,7 +31,15 @@ export default function Transaction({ addresses, values }: TransactionProps) {
   const { write } = useContractWrite(config)
 
   if (isConnected) {
-    return <button onClick={() => write?.()}>Submit transaction</button>
+    return (
+      <Button
+        size="small"
+        onClick={() => write?.()}
+        style={{ maxWidth: '16rem' }}
+      >
+        Submit transaction
+      </Button>
+    )
   } else {
     return <ConnectButton showBalance={false} />
   }

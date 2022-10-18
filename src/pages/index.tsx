@@ -1,9 +1,15 @@
+import { Button, Input, Typography } from '@ensdomains/thorin'
+import { css } from 'styled-components'
 import { handleSubmit } from '../utils'
 import { useState } from 'react'
 import Head from 'next/head'
 
 import { ContractFunctions } from '../types'
 import Transaction from '../components/Transaction'
+
+const inputStyles = css`
+  background: #fff;
+`
 
 export default function Home() {
   const [msg, setMsg] = useState<string>('')
@@ -27,10 +33,9 @@ export default function Home() {
 
       <main>
         <form
-          style={{ marginTop: '1rem' }}
-          onSubmit={(event) =>
+          onSubmit={(event) => {
             handleSubmit({ event, setMsg, setAddresses, setValues })
-          }
+          }}
         >
           <div className="input-group">
             <label htmlFor="addresses">Transaction type</label>
@@ -59,13 +64,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="input-group">
-            <label htmlFor="address">Contract Address</label>
-            <input
+          <div className="input-group-thorin">
+            <Input
               type="text"
               name="address"
               id="address"
-              defaultValue={placeholderAddress}
+              label="Contract Address"
+              parentStyles={inputStyles}
+              value={placeholderAddress}
               placeholder={placeholderAddress}
               onBlur={() =>
                 alert(
@@ -75,31 +81,41 @@ export default function Home() {
             />
           </div>
 
-          <div className="input-group">
-            <label htmlFor="start-block">Start block</label>
-            <input
+          <div className="input-group-thorin">
+            <Input
               type="number"
               name="start-block"
               id="start-block"
-              defaultValue={15100000}
+              value={15100000}
+              step={10000}
+              min={0}
               placeholder="15100000"
+              label="Start block"
+              parentStyles={inputStyles}
             />
           </div>
 
-          <div className="input-group">
-            <label htmlFor="end-block">End block</label>
-            <input
+          <div className="input-group-thorin">
+            <Input
               type="number"
               name="end-block"
               id="end-block"
               placeholder="20000000"
+              step={10000}
+              min={0}
+              label="End block"
+              parentStyles={inputStyles}
             />
           </div>
 
-          <button type="submit">Fetch gas costs</button>
+          <Button tone="accent" type="submit">
+            Fetch gas costs
+          </Button>
         </form>
 
-        <p className="msg">{msg}</p>
+        <Typography as="p" style={{ marginBottom: '0.5rem' }}>
+          {msg}
+        </Typography>
 
         {addresses.length > 0 && (
           <Transaction addresses={addresses} values={values} />
