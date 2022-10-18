@@ -5,6 +5,7 @@ import Head from 'next/head'
 import styled, { css } from 'styled-components'
 
 import { ContractFunctions } from '../types'
+import { ContractList } from '../components/ContractList'
 import Transaction from '../components/Transaction'
 
 const inputStyles = css`
@@ -32,6 +33,11 @@ export default function Home() {
     typeSelection === 'delegate'
       ? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
       : '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
+
+  useEffect(() => {
+    setContractAddress(placeholderAddress)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -84,6 +90,12 @@ export default function Home() {
               value={contractAddress}
               placeholder={placeholderAddress}
               onChange={(e) => setContractAddress(e.target.value)}
+            />
+
+            <ContractList
+              contractAddress={contractAddress}
+              setContractAddress={setContractAddress}
+              typeSelection={typeSelection}
             />
           </div>
 
