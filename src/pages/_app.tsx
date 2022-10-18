@@ -1,6 +1,8 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
 import '@rainbow-me/rainbowkit/styles.css'
+import { ThemeProvider } from 'styled-components'
+import { ThorinGlobalStyles, lightTheme } from '@ensdomains/thorin'
 
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
@@ -25,11 +27,14 @@ const wagmiClient = createClient({
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <ThemeProvider theme={lightTheme}>
+      <ThorinGlobalStyles />
+      <WagmiConfig client={wagmiClient}>
+        <RainbowKitProvider chains={chains}>
+          <Component {...pageProps} />
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </ThemeProvider>
   )
 }
 
