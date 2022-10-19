@@ -35,7 +35,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
       <Button
         size="small"
         onClick={() => write?.()}
-        style={{ maxWidth: '16rem' }}
+        style={{ maxWidth: '16rem', margin: '0 auto' }}
       >
         Submit transaction
       </Button>

@@ -156,7 +156,11 @@ export default function Home() {
           </Button>
         </form>
 
-        <Typography as="p" style={{ marginBottom: '0.5rem' }}>
+        <Typography
+          as="p"
+          size="base"
+          style={{ marginBottom: '0.75rem', textAlign: 'center' }}
+        >
           {msg}
         </Typography>
 
