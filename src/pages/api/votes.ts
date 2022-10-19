@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse<VotesApiResponse>
 ) {
   const { address: _address, start_block, end_block, type } = req.query
-  const address = _address!.toString().toLowerCase()
+  const address = _address!.toString()
 
   const ensContracts = [
     '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',

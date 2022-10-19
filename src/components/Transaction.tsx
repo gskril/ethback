@@ -1,9 +1,10 @@
+import { Button } from '@ensdomains/thorin'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import toast from 'react-hot-toast'
 
 import { TransactionProps } from '../types'
 import disperseAbi from '../contracts/disperse-abi.json'
-import { Button } from '@ensdomains/thorin'
 
 export default function Transaction({ addresses, values }: TransactionProps) {
   const { isConnected } = useAccount()
@@ -23,8 +24,8 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     onError: (err) => {
       const msg = err.message.includes('insufficient funds')
         ? 'Insufficient funds'
-        : 'Error preparing transaction, try a smaller block range'
-      alert(msg)
+        : 'Error preparing transaction'
+      toast.error(msg)
     },
   })
 

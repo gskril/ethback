@@ -1,5 +1,6 @@
 import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
 import { handleSubmit } from '../utils'
+import { Toaster } from 'react-hot-toast'
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styled, { css } from 'styled-components'
@@ -168,6 +169,8 @@ export default function Home() {
           <Transaction addresses={addresses} values={values} />
         )}
       </main>
+
+      <Toaster position="bottom-center" />
     </>
   )
 }
