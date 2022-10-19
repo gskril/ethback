@@ -1,3 +1,4 @@
+import { sortWhitelistedContract } from '../../utils'
 import got from 'got'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { SortResponse, VotesApiResponse } from '../../types'
@@ -9,18 +10,13 @@ export default async function handler(
   const { address: _address, start_block, end_block, type } = req.query
   const address = _address!.toString()
 
-  const ensContracts = [
-    '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
-    '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3',
-  ]
-
   const sortQuery = `
     select
       "from",
       t.gas.transaction_fee.eth as gas
     from
       ${
-        ensContracts.includes(address)
+        sortWhitelistedContract.includes(address)
           ? 'user14.transaction'
           : 'ethereum.transaction'
       } t

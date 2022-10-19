@@ -6,6 +6,12 @@ import type {
   VotesApiResponse,
 } from './types'
 
+export const sortWhitelistedContract = [
+  '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+  '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3',
+  '0x6f3e6272a167e8accb32072d08e0957f9c79223d',
+]
+
 export async function handleSubmit({
   event: e,
   setMsg,
@@ -20,10 +26,7 @@ export async function handleSubmit({
   const type: ContractFunctions = form['type'].value
   const address: string = form.address.value.toLowerCase()
 
-  if (
-    address !== '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72' &&
-    address !== '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
-  ) {
+  if (!sortWhitelistedContract.includes(address)) {
     toast('This contract is limited to 7 days of transaction history', {
       icon: '🚧',
       duration: 5000,
