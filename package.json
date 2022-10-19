@@ -1,5 +1,5 @@
 {
-  "name": "reimburse-xyz",
+  "name": "ethback",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "ethers": "^5.7.1",
     "got": "^12.5.1",
     "next": "12.3.1",
+    "next-plausible": "^3.6.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",

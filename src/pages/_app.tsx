@@ -1,8 +1,9 @@
 import '../styles/globals.scss'
-import type { AppProps } from 'next/app'
 import '@rainbow-me/rainbowkit/styles.css'
 import { ThemeProvider } from 'styled-components'
 import { ThorinGlobalStyles, lightTheme } from '@ensdomains/thorin'
+import PlausibleProvider from 'next-plausible'
+import type { AppProps } from 'next/app'
 
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
@@ -15,7 +16,7 @@ const { chains, provider } = configureChains(
 )
 
 const { connectors } = getDefaultWallets({
-  appName: 'Reimburse.xyz',
+  appName: 'ethback.xyz',
   chains,
 })
 
@@ -27,14 +28,16 @@ const wagmiClient = createClient({
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <ThorinGlobalStyles />
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains} modalSize="compact">
-          <Component {...pageProps} />
-        </RainbowKitProvider>
-      </WagmiConfig>
-    </ThemeProvider>
+    <PlausibleProvider domain="ethback.xyz" trackOutboundLinks>
+      <ThemeProvider theme={lightTheme}>
+        <ThorinGlobalStyles />
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider chains={chains} modalSize="compact">
+            <Component {...pageProps} />
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </ThemeProvider>
+    </PlausibleProvider>
   )
 }
 

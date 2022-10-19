@@ -1,7 +1,7 @@
 import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
 import { handleSubmit } from '../utils'
 import { Toaster } from 'react-hot-toast'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import styled, { css } from 'styled-components'
 
@@ -35,15 +35,10 @@ export default function Home() {
       ? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
       : '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
 
-  useEffect(() => {
-    setContractAddress(placeholderAddress)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <>
       <Head>
-        <title>Reimburse.xyz</title>
+        <title>ETH Back</title>
         <meta name="description" content="Reimburse DAO contributors for gas" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -61,7 +56,7 @@ export default function Home() {
             <br />
             Contract by{' '}
             <a href="https://disperse.app" target="_blank" rel="noreferrer">
-              reimburse.app
+              disperse.app
             </a>{' '}
             <br />
             Frontend by{' '}
