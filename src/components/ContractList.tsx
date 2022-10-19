@@ -31,6 +31,26 @@ const presetContracts: Contracts[] = [
     address: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
   },
   {
+    name: '$UNI',
+    functions: ['delegate'],
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  },
+  {
+    name: 'Uniswap Governor',
+    functions: ['castVote'],
+    address: '0x408ED6354d4973f66138C91495F2f2FCbd8724C3',
+  },
+  {
+    name: 'Nouns DAO',
+    functions: ['castVote'],
+    address: '0x6f3e6272a167e8accb32072d08e0957f9c79223d',
+  },
+  {
+    name: 'Nouns DAO',
+    functions: ['delegate'],
+    address: '0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03',
+  },
+  {
     name: 'LilNouns',
     functions: ['delegate'],
     address: '0x4b10701bfd7bfedc47d50562b76b436fbb5bdb3b',
@@ -62,7 +82,9 @@ export function ContractList({
       {contracts.map((contract) => (
         <Button
           variant={
-            contractAddress === contract.address ? 'primary' : 'secondary'
+            contractAddress.toLowerCase() === contract.address.toLowerCase()
+              ? 'primary'
+              : 'secondary'
           }
           shadowless
           size="extraSmall"
