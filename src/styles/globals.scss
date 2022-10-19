@@ -1,18 +1,26 @@
+:root {
+  --color-primary: #5298ff;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
 }
 
+a {
+  color: var(--color-primary) !important;
+}
+
 main {
-  max-width: 30rem;
+  max-width: 35rem;
   padding: 0 1rem;
   min-height: 100vh;
-  display: flex;
   margin: 0 auto;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+.hero {
+  padding: 6rem 0 3rem;
 }
 
 form {
@@ -58,7 +66,7 @@ form {
 
     &:checked + label {
       font-weight: 700;
-      border-color: rgb(82, 152, 255);
+      border-color: var(--color-primary);
     }
   }
 }

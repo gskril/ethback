@@ -1,4 +1,4 @@
-import { Button, Input, Typography } from '@ensdomains/thorin'
+import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
 import { handleSubmit } from '../utils'
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
@@ -48,6 +48,32 @@ export default function Home() {
       </Head>
 
       <main>
+        <div className="hero">
+          <Heading as="h2" level="2" style={{ marginBottom: '1.5rem' }}>
+            Reimburse DAO contributors for gas
+          </Heading>
+          <Typography as="p" size="base">
+            Data by{' '}
+            <a href="https://sort.xyz" target="_blank" rel="noreferrer">
+              sort.xyz
+            </a>{' '}
+            <br />
+            Contract by{' '}
+            <a href="https://disperse.app" target="_blank" rel="noreferrer">
+              reimburse.app
+            </a>{' '}
+            <br />
+            Frontend by{' '}
+            <a
+              href="https://twitter.com/gregskril"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @gregskril
+            </a>
+          </Typography>
+        </div>
+
         <form
           onSubmit={(event) => {
             handleSubmit({ event, setMsg, setAddresses, setValues })

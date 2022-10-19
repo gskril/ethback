@@ -60,7 +60,7 @@ const presetContracts: Contracts[] = [
 const Contracts = styled.div`
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  padding-top: 0.5rem;
   overflow-x: scroll;
 
   & > * {
