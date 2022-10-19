@@ -28,7 +28,7 @@ export default function Home() {
   const [addresses, setAddresses] = useState<string[]>([])
   const [contractAddress, setContractAddress] = useState<string>('')
   const [typeSelection, setTypeSelection] =
-    useState<ContractFunctions>('delegate')
+    useState<ContractFunctions>('castVote')
 
   const placeholderAddress =
     typeSelection === 'delegate'
@@ -87,22 +87,22 @@ export default function Home() {
                 <input
                   type="radio"
                   name="type"
-                  value="delegate"
-                  id="delegate"
+                  value="castVote"
+                  id="castVote"
                   defaultChecked
-                  onChange={() => setTypeSelection('delegate')}
+                  onChange={() => setTypeSelection('castVote')}
                 />
-                <label htmlFor="delegate">Delegations</label>
+                <label htmlFor="castVote">Votes</label>
               </div>
               <div className="radio-group">
                 <input
                   type="radio"
                   name="type"
-                  value="castVote"
-                  id="castVote"
-                  onChange={() => setTypeSelection('castVote')}
+                  value="delegate"
+                  id="delegate"
+                  onChange={() => setTypeSelection('delegate')}
                 />
-                <label htmlFor="castVote">Votes</label>
+                <label htmlFor="delegate">Delegations</label>
               </div>
             </div>
           </div>

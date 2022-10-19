@@ -1,6 +1,6 @@
 import { Button } from '@ensdomains/thorin'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import toast from 'react-hot-toast'
 
 import { TransactionProps } from '../types'
@@ -12,6 +12,8 @@ export default function Transaction({ addresses, values }: TransactionProps) {
   const formattedValues = values.map((value) =>
     Math.floor(value / 0.000000000000000001)
   )
+
+  const { openConnectModal } = useConnectModal()
 
   const { config, error: prepareTxError } = usePrepareContractWrite({
     addressOrName: '0xD152f549545093347A162Dce210e7293f1452150',
@@ -37,12 +39,20 @@ export default function Transaction({ addresses, values }: TransactionProps) {
         size="small"
         disabled={prepareTxError !== null}
         onClick={() => write?.()}
-        style={{ maxWidth: '16rem', margin: '0 auto' }}
+        style={{ width: 'fit-content', margin: '0 auto' }}
       >
         Submit transaction
       </Button>
     )
   } else {
-    return <ConnectButton showBalance={false} />
+    return (
+      <Button
+        size="small"
+        onClick={openConnectModal}
+        style={{ width: 'fit-content', margin: '0 auto' }}
+      >
+        Connect wallet
+      </Button>
+    )
   }
 }

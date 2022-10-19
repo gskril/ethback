@@ -30,7 +30,7 @@ function App({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={lightTheme}>
       <ThorinGlobalStyles />
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider chains={chains} modalSize="compact">
           <Component {...pageProps} />
         </RainbowKitProvider>
       </WagmiConfig>
