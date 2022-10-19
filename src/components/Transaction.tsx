@@ -13,7 +13,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     Math.floor(value / 0.000000000000000001)
   )
 
-  const { config } = usePrepareContractWrite({
+  const { config, error: prepareTxError } = usePrepareContractWrite({
     addressOrName: '0xD152f549545093347A162Dce210e7293f1452150',
     contractInterface: disperseAbi,
     functionName: 'disperseEther',
@@ -35,6 +35,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     return (
       <Button
         size="small"
+        disabled={prepareTxError !== null}
         onClick={() => write?.()}
         style={{ maxWidth: '16rem', margin: '0 auto' }}
       >

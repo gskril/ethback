@@ -24,16 +24,13 @@ export async function handleSubmit({
     address !== '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72' &&
     address !== '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
   ) {
-    toast(
-      'This contract is currently limited to 7 days of transaction history',
-      {
-        icon: '🚧',
-        duration: 5000,
-        style: {
-          maxWidth: '100%',
-        },
-      }
-    )
+    toast('This contract is limited to 7 days of transaction history', {
+      icon: '🚧',
+      duration: 5000,
+      style: {
+        maxWidth: '100%',
+      },
+    })
   }
 
   setMsg('Fetching gas costs...')
