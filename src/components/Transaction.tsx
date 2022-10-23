@@ -10,7 +10,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
   const { isConnected } = useAccount()
 
   const formattedValues = values.map((value) =>
-    Math.floor(value / 0.000000000000000001)
+    Math.floor(value / 0.000000000000000001).toString()
   )
 
   const { openConnectModal } = useConnectModal()
@@ -21,7 +21,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     functionName: 'disperseEther',
     args: [addresses, formattedValues],
     overrides: {
-      value: formattedValues.reduce((a, b) => a + b, 0).toString(),
+      value: formattedValues.reduce((a, b) => a + Number(b), 0).toString(),
     },
     onError: (err) => {
       const msg = err.message.includes('insufficient funds')
