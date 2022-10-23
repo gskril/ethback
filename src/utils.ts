@@ -5,6 +5,7 @@ import type {
   Response,
   VotesApiResponse,
 } from './types'
+import { SendTransactionResult } from '@wagmi/core'
 
 export const sortWhitelistedContract = [
   '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
@@ -73,4 +74,11 @@ function beautifyFunction(name: ContractFunctions) {
     default:
       return name
   }
+}
+
+export function formatEtherscanLink(
+  chainId: number,
+  txn: SendTransactionResult
+) {
+  return `https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${txn.hash}`
 }

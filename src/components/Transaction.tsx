@@ -4,12 +4,19 @@ import {
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
+  useWaitForTransaction,
 } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import toast from 'react-hot-toast'
 
 import { TransactionProps } from '../types'
 import disperseAbi from '../contracts/disperse-abi.json'
+import { formatEtherscanLink } from '../utils'
+
+const buttonStyles = {
+  width: 'fit-content',
+  margin: '0 auto',
+}
 
 export default function Transaction({ addresses, values }: TransactionProps) {
   const { isConnected } = useAccount()
@@ -37,28 +44,80 @@ export default function Transaction({ addresses, values }: TransactionProps) {
     },
   })
 
-  const { write } = useContractWrite(config)
+  const { data: txn, write } = useContractWrite(config)
+  const {
+    data: txnReceipt,
+    isError: txnIsError,
+    isLoading: txnIsPending,
+  } = useWaitForTransaction(txn)
 
-  if (isConnected) {
+  if (!isConnected) {
     return (
-      <Button
-        size="small"
-        disabled={prepareTxError !== null}
-        onClick={() => write?.()}
-        style={{ width: 'fit-content', margin: '0 auto' }}
-      >
-        Submit transaction {chain?.id !== 1 && '(testnet)'}
-      </Button>
-    )
-  } else {
-    return (
-      <Button
-        size="small"
-        onClick={openConnectModal}
-        style={{ width: 'fit-content', margin: '0 auto' }}
-      >
+      <Button size="small" onClick={openConnectModal} style={buttonStyles}>
         Connect wallet
       </Button>
     )
   }
+
+  if (txnIsPending) {
+    return (
+      <Button
+        as="a"
+        loading
+        size="small"
+        target="_blank"
+        href={formatEtherscanLink(chain!.id, txn!)}
+        style={buttonStyles}
+      >
+        <span
+          style={{
+            color: '#fff',
+          }}
+        >
+          View on Etherscan
+        </span>
+      </Button>
+    )
+  }
+
+  if (txnIsError) {
+    return (
+      <Button
+        as="a"
+        size="small"
+        tone="red"
+        variant="secondary"
+        target="_blank"
+        href="https://github.com/gskril/ethback/issues"
+        style={buttonStyles}
+      >
+        Transaction failed
+      </Button>
+    )
+  }
+
+  if (txnReceipt) {
+    return (
+      <Button
+        as="a"
+        size="small"
+        target="_blank"
+        href={formatEtherscanLink(chain!.id, txn!)}
+        style={buttonStyles}
+      >
+        Transaction completed!
+      </Button>
+    )
+  }
+
+  return (
+    <Button
+      size="small"
+      disabled={prepareTxError !== null}
+      onClick={() => write?.()}
+      style={buttonStyles}
+    >
+      Submit transaction {chain?.id !== 1 && '(testnet)'}
+    </Button>
+  )
 }
