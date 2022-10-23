@@ -1,5 +1,10 @@
 import { Button } from '@ensdomains/thorin'
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
+import {
+  useAccount,
+  useContractWrite,
+  useNetwork,
+  usePrepareContractWrite,
+} from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import toast from 'react-hot-toast'
 
@@ -8,9 +13,10 @@ import disperseAbi from '../contracts/disperse-abi.json'
 
 export default function Transaction({ addresses, values }: TransactionProps) {
   const { isConnected } = useAccount()
+  const { chain } = useNetwork()
 
   const formattedValues = values.map((value) =>
-    Math.floor(value / 0.000000000000000001).toString()
+    Math.ceil(value / 0.000000000000000001).toString()
   )
 
   const { openConnectModal } = useConnectModal()
@@ -41,7 +47,7 @@ export default function Transaction({ addresses, values }: TransactionProps) {
         onClick={() => write?.()}
         style={{ width: 'fit-content', margin: '0 auto' }}
       >
-        Submit transaction
+        Submit transaction {chain?.id !== 1 && '(testnet)'}
       </Button>
     )
   } else {
