@@ -7,6 +7,7 @@ import {
   useWaitForTransaction,
 } from 'wagmi'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 import { TransactionProps } from '../types'
@@ -55,6 +56,13 @@ export default function Transaction({
     isLoading: txnIsPending,
   } = useWaitForTransaction(txn)
 
+  useEffect(() => {
+    if (txnIsPending) {
+      setTxnStarted(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txnIsPending])
+
   if (!isConnected) {
     return (
       <Button size="small" onClick={openConnectModal} style={buttonStyles}>
@@ -64,8 +72,6 @@ export default function Transaction({
   }
 
   if (txnIsPending) {
-    setTxnStarted(true)
-
     return (
       <Button
         as="a"

@@ -1,7 +1,8 @@
 import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
 import { handleSubmit } from '../utils'
 import { Toaster } from 'react-hot-toast'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { usePlausible } from 'next-plausible'
 import Head from 'next/head'
 import styled, { css } from 'styled-components'
 
@@ -23,6 +24,7 @@ const Label = styled(Typography)(
 )
 
 export default function Home() {
+  const plausible = usePlausible()
   const [msg, setMsg] = useState<string>('')
   const [values, setValues] = useState<number[]>([])
   const [addresses, setAddresses] = useState<string[]>([])
@@ -35,6 +37,18 @@ export default function Home() {
     typeSelection === 'delegate'
       ? '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
       : '0x323a76393544d5ecca80cd6ef2a560c6a395b7e3'
+
+  useEffect(() => {
+    if (txnStarted) {
+      plausible('Reimburse', {
+        props: {
+          contract: contractAddress,
+          type: typeSelection,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txnStarted])
 
   return (
     <>

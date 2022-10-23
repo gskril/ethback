@@ -27,6 +27,11 @@ export async function handleSubmit({
   const type: ContractFunctions = form['type'].value
   const address: string = form.address.value.toLowerCase()
 
+  if (address.length !== 42 || !address.startsWith('0x')) {
+    toast.error('Invalid address')
+    return
+  }
+
   if (!sortWhitelistedContract.includes(address)) {
     toast('This contract is limited to 7 days of transaction history', {
       icon: '🚧',
