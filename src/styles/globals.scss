@@ -1,5 +1,6 @@
 :root {
   --color-primary: #5298ff;
+  --color-disabled: #e8e8eb;
 }
 
 html,
@@ -68,9 +69,21 @@ form {
     position: absolute;
     border: none;
 
-    &:checked + label {
-      font-weight: 700;
-      border-color: var(--color-primary);
+    &:checked {
+      & + label {
+        font-weight: 700;
+        border-color: var(--color-primary);
+      }
+
+      &:disabled {
+        & + label {
+          border-color: var(--color-disabled);
+        }
+      }
+    }
+
+    &:disabled:hover + label {
+      cursor: not-allowed;
     }
   }
 }

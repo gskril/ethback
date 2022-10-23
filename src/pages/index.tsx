@@ -26,6 +26,7 @@ export default function Home() {
   const [msg, setMsg] = useState<string>('')
   const [values, setValues] = useState<number[]>([])
   const [addresses, setAddresses] = useState<string[]>([])
+  const [txnStarted, setTxnStarted] = useState<boolean>(false)
   const [contractAddress, setContractAddress] = useState<string>('')
   const [typeSelection, setTypeSelection] =
     useState<ContractFunctions>('castVote')
@@ -85,6 +86,7 @@ export default function Home() {
                   value="castVote"
                   id="castVote"
                   defaultChecked
+                  disabled={txnStarted}
                   onChange={() => setTypeSelection('castVote')}
                 />
                 <label htmlFor="castVote">Votes</label>
@@ -95,6 +97,7 @@ export default function Home() {
                   name="type"
                   value="delegate"
                   id="delegate"
+                  disabled={txnStarted}
                   onChange={() => setTypeSelection('delegate')}
                 />
                 <label htmlFor="delegate">Delegations</label>
@@ -112,12 +115,14 @@ export default function Home() {
               value={contractAddress}
               placeholder={placeholderAddress}
               onChange={(e) => setContractAddress(e.target.value)}
+              disabled={txnStarted}
             />
 
             <ContractList
               contractAddress={contractAddress}
               setContractAddress={setContractAddress}
               typeSelection={typeSelection}
+              disabled={txnStarted}
             />
           </div>
 
@@ -130,6 +135,7 @@ export default function Home() {
               min={0}
               placeholder="15100000"
               label="Start block"
+              disabled={txnStarted}
               parentStyles={inputStyles}
             />
           </div>
@@ -143,11 +149,12 @@ export default function Home() {
               step={10000}
               min={0}
               label="End block"
+              disabled={txnStarted}
               parentStyles={inputStyles}
             />
           </div>
 
-          <Button tone="accent" type="submit">
+          <Button tone="accent" type="submit" disabled={txnStarted}>
             Fetch gas costs
           </Button>
         </form>
@@ -161,7 +168,11 @@ export default function Home() {
         </Typography>
 
         {addresses.length > 0 && (
-          <Transaction addresses={addresses} values={values} />
+          <Transaction
+            addresses={addresses}
+            values={values}
+            setTxnStarted={setTxnStarted}
+          />
         )}
       </main>
 

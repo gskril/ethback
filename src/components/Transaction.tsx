@@ -18,7 +18,11 @@ const buttonStyles = {
   margin: '0 auto',
 }
 
-export default function Transaction({ addresses, values }: TransactionProps) {
+export default function Transaction({
+  addresses,
+  values,
+  setTxnStarted,
+}: TransactionProps) {
   const { isConnected } = useAccount()
   const { chain } = useNetwork()
 
@@ -60,6 +64,8 @@ export default function Transaction({ addresses, values }: TransactionProps) {
   }
 
   if (txnIsPending) {
+    setTxnStarted(true)
+
     return (
       <Button
         as="a"

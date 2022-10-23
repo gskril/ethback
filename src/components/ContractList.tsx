@@ -6,6 +6,7 @@ type Props = {
   contractAddress: string
   setContractAddress: (address: string) => void
   typeSelection: ContractFunctions
+  disabled: boolean
 }
 
 type Contracts = {
@@ -72,6 +73,7 @@ export function ContractList({
   contractAddress,
   setContractAddress,
   typeSelection,
+  disabled,
 }: Props): JSX.Element {
   const contracts = presetContracts.filter((contract) =>
     contract.functions.includes(typeSelection)
@@ -89,6 +91,7 @@ export function ContractList({
           shadowless
           size="extraSmall"
           key={contract.name}
+          disabled={disabled}
           onClick={() => setContractAddress(contract.address)}
         >
           {contract.name}

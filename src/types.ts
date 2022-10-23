@@ -37,6 +37,7 @@ export type SortResponse = {
 export type TransactionProps = {
   addresses: string[]
   values: number[]
+  setTxnStarted: (value: boolean) => void
 }
 
 export type ContractFunctions = 'castVote' | 'delegate'
