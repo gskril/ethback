@@ -54,8 +54,17 @@ export default function Home() {
     <>
       <Head>
         <title>ETH Back</title>
-        <meta name="description" content="Reimburse DAO contributors for gas" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="ETH Back" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="og:image" content="https://ethback.xyz/sharing.jpg" />
+        <meta
+          name="description"
+          content="The easiest way for DAOs to reimburse their contributors for gas fees on voting and delegating"
+        />
+        <meta
+          property="og:description"
+          content="Reimburse DAO contributors for governance-related transaction fees"
+        />
       </Head>
 
       <main>
