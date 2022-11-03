@@ -83,6 +83,12 @@ function handleSubmit(
   if (isSubmitted) return
   const email = e.target.email.value
 
+  // Validate email
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    alert('Please enter a valid email address')
+    return
+  }
+
   fetch('/api/email', {
     method: 'POST',
     headers: {
