@@ -30,57 +30,73 @@ const EmailSubmission = styled.div(
   `
 )
 
+type FormState = 'idle' | 'loading' | 'error' | 'success'
+
 export default function EmailSignup({
   contractAddress: contract,
 }: {
   contractAddress: string
 }) {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [state, setState] = useState<FormState>('idle')
 
   return (
     <StyledHelper type="warning" alignment="horizontal">
-      <form
-        onSubmit={(e) => handleSubmit(e, contract, isSubmitted, setIsSubmitted)}
-      >
+      <form onSubmit={(e) => handleSubmit(e, contract, state, setState)}>
         <p>
           This contract is currently limited to 7 days of transaction history.
           Sign up to request historial data and get notified when it&apos;s
           ready.
         </p>
-        <EmailSubmission submitted={isSubmitted}>
+        <EmailSubmission submitted={state === 'success'}>
           <Input
             type="email"
             name="email"
             placeholder="Enter your email"
             parentStyles={inputStyles}
-            disabled={isSubmitted}
+            disabled={state === 'success'}
             hideLabel
             required
             label=""
           />
-          {isSubmitted ? (
-            <Button size="extraSmall" tone="green" variant="secondary">
-              We will be in touch!
-            </Button>
-          ) : (
-            <Button size="extraSmall" type="submit">
-              Submit
-            </Button>
-          )}
+          <SubmitButton state={state} />
         </EmailSubmission>
       </form>
     </StyledHelper>
   )
 }
 
-function handleSubmit(
+function SubmitButton({ state }: { state: FormState }) {
+  if (state === 'success') {
+    return (
+      <Button size="extraSmall" tone="green" variant="secondary">
+        We will be in touch!
+      </Button>
+    )
+  }
+
+  if (state === 'error') {
+    return (
+      <Button size="extraSmall" tone="red" type="submit" variant="secondary">
+        Error submitting form
+      </Button>
+    )
+  }
+
+  return (
+    <Button size="extraSmall" type="submit" loading={state === 'loading'}>
+      {state === 'loading' ? 'Submitting' : 'Submit'}
+    </Button>
+  )
+}
+
+async function handleSubmit(
   e: any,
   contract: string,
-  isSubmitted: boolean,
-  setIsSubmitted: React.Dispatch<React.SetStateAction<boolean>>
+  state: FormState,
+  setState: React.Dispatch<React.SetStateAction<FormState>>
 ) {
   e.preventDefault()
-  if (isSubmitted) return
+  if (state === 'success' || state === 'loading') return
   const email = e.target.email.value
 
   // Validate email
@@ -89,7 +105,9 @@ function handleSubmit(
     return
   }
 
-  fetch('/api/email', {
+  setState('loading')
+
+  const res = await fetch('/api/email', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -100,5 +118,5 @@ function handleSubmit(
     }),
   })
 
-  setIsSubmitted(true)
+  setState(res.status === 200 ? 'success' : 'error')
 }
