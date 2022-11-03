@@ -18,6 +18,7 @@ export async function handleSubmit({
   setMsg,
   setAddresses,
   setValues,
+  setIsEmailVisible,
 }: FormProps) {
   e.preventDefault()
 
@@ -33,13 +34,9 @@ export async function handleSubmit({
   }
 
   if (!sortWhitelistedContract.includes(address)) {
-    toast('This contract is limited to 7 days of transaction history', {
-      icon: '🚧',
-      duration: 5000,
-      style: {
-        maxWidth: '100%',
-      },
-    })
+    setIsEmailVisible(true)
+  } else {
+    setIsEmailVisible(false)
   }
 
   setMsg('Fetching gas costs...')

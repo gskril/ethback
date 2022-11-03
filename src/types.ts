@@ -3,6 +3,7 @@ export type FormProps = {
   setMsg: React.Dispatch<React.SetStateAction<string>>
   setAddresses: React.Dispatch<React.SetStateAction<string[]>>
   setValues: React.Dispatch<React.SetStateAction<number[]>>
+  setIsEmailVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type VotesApiResponse = {

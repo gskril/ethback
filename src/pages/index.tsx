@@ -9,8 +9,9 @@ import styled, { css } from 'styled-components'
 import { ContractFunctions } from '../types'
 import { ContractList } from '../components/ContractList'
 import Transaction from '../components/Transaction'
+import EmailSignup from '../components/EmailSignup'
 
-const inputStyles = css`
+export const inputStyles = css`
   background: #fff;
 `
 
@@ -30,6 +31,7 @@ export default function Home() {
   const [addresses, setAddresses] = useState<string[]>([])
   const [txnStarted, setTxnStarted] = useState<boolean>(false)
   const [contractAddress, setContractAddress] = useState<string>('')
+  const [isEmailVisible, setIsEmailVisible] = useState<boolean>(false)
   const [typeSelection, setTypeSelection] =
     useState<ContractFunctions>('castVote')
 
@@ -49,6 +51,8 @@ export default function Home() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txnStarted])
+
+  useEffect(() => setIsEmailVisible(false), [contractAddress])
 
   return (
     <>
@@ -96,7 +100,13 @@ export default function Home() {
 
         <form
           onSubmit={(event) => {
-            handleSubmit({ event, setMsg, setAddresses, setValues })
+            handleSubmit({
+              event,
+              setMsg,
+              setAddresses,
+              setValues,
+              setIsEmailVisible,
+            })
           }}
         >
           <div>
@@ -181,6 +191,8 @@ export default function Home() {
             Fetch gas costs
           </Button>
         </form>
+
+        {isEmailVisible && <EmailSignup contractAddress={contractAddress} />}
 
         <Typography
           as="p"
