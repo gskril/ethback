@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 import { TransactionProps } from '../types'
 import disperseAbi from '../contracts/disperse-abi.json'
 import { formatEtherscanLink } from '../utils'
+import { parseEther } from 'ethers/lib/utils'
 
 const buttonStyles = {
   width: 'fit-content',
@@ -20,26 +21,28 @@ const buttonStyles = {
 }
 
 export default function Transaction({
+  index,
   addresses,
-  values,
+  values: ethValues,
   setTxnStarted,
 }: TransactionProps) {
   const { isConnected } = useAccount()
   const { chain } = useNetwork()
 
-  const formattedValues = values.map((value) =>
+  const weiValues = ethValues.map((value) =>
     Math.ceil(value / 0.000000000000000001).toString()
   )
 
+  const totalEth = ethValues.reduce((a, b) => a + b, 0)
   const { openConnectModal } = useConnectModal()
 
   const { config, error: prepareTxError } = usePrepareContractWrite({
     addressOrName: '0xD152f549545093347A162Dce210e7293f1452150',
     contractInterface: disperseAbi,
     functionName: 'disperseEther',
-    args: [addresses, formattedValues],
+    args: [addresses, weiValues],
     overrides: {
-      value: formattedValues.reduce((a, b) => a + Number(b), 0).toString(),
+      value: parseEther(`${totalEth + 0.001}`), // add some buffer
     },
     onError: (err) => {
       const msg = err.message.includes('insufficient funds')
@@ -129,7 +132,7 @@ export default function Transaction({
       onClick={() => write?.()}
       style={buttonStyles}
     >
-      Submit transaction {chain?.id !== 1 && '(testnet)'}
+      Submit transaction {index} {chain?.id !== 1 && '(testnet)'}
     </Button>
   )
 }

@@ -1,15 +1,15 @@
 import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
-import { handleSubmit } from '../utils'
 import { Toaster } from 'react-hot-toast'
-import { useState, useEffect } from 'react'
 import { usePlausible } from 'next-plausible'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import styled, { css } from 'styled-components'
 
+import { chunk, handleSubmit } from '../utils'
 import { ContractFunctions } from '../types'
 import { ContractList } from '../components/ContractList'
-import Transaction from '../components/Transaction'
 import EmailSignup from '../components/EmailSignup'
+import Transaction from '../components/Transaction'
 
 export const inputStyles = css`
   background: #fff;
@@ -23,6 +23,8 @@ const Label = styled(Typography)(
     margin-bottom: 0.5rem;
   `
 )
+
+const addressesPerTransaction = 600
 
 export default function Home() {
   const plausible = usePlausible()
@@ -200,13 +202,31 @@ export default function Home() {
           {msg}
         </Typography>
 
-        {addresses.length > 0 && (
-          <Transaction
-            addresses={addresses}
-            values={values}
-            setTxnStarted={setTxnStarted}
-          />
+        {addresses.length > addressesPerTransaction && (
+          <Typography
+            as="p"
+            size="base"
+            style={{ marginBottom: '0.75rem', textAlign: 'center' }}
+          >
+            The contract is limited to {addressesPerTransaction} addresses per
+            transaction
+          </Typography>
         )}
+
+        <div className="transactions">
+          {addresses.length > 0 &&
+            chunk({ addresses, values }, addressesPerTransaction).map(
+              (chunk, index) => (
+                <Transaction
+                  key={index}
+                  index={index + 1}
+                  addresses={chunk.addresses}
+                  values={chunk.values}
+                  setTxnStarted={() => setTxnStarted}
+                />
+              )
+            )}
+        </div>
       </main>
 
       <Toaster position="bottom-center" />

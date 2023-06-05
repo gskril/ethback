@@ -36,6 +36,7 @@ export type SortResponse = {
 }
 
 export type TransactionProps = {
+  index: number
   addresses: string[]
   values: number[]
   setTxnStarted: (value: boolean) => void

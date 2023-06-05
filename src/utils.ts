@@ -84,3 +84,19 @@ export function formatEtherscanLink(
 ) {
   return `https://${chainId === 5 ? 'goerli.' : ''}etherscan.io/tx/${txn.hash}`
 }
+
+export function chunk(
+  { addresses, values }: { addresses: string[]; values: number[] },
+  size: number
+) {
+  const chunked_arr = []
+  let index = 0
+  while (index < addresses.length) {
+    chunked_arr.push({
+      addresses: addresses.slice(index, size + index),
+      values: values.slice(index, size + index),
+    })
+    index += size
+  }
+  return chunked_arr
+}
