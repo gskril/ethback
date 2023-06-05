@@ -22,6 +22,7 @@ export default async function handler(
       } t
     where
         "to" = '${address}'
+        and status = 1
         and t.function.name like '${type}'
         and block_number > ${start_block}
         and block_number < ${end_block}
