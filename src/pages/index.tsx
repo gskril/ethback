@@ -1,5 +1,6 @@
 import { Button, Heading, Input, Typography } from '@ensdomains/thorin'
 import { Toaster } from 'react-hot-toast'
+import { useAccount } from 'wagmi'
 import { usePlausible } from 'next-plausible'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
@@ -28,6 +29,7 @@ const addressesPerTransaction = 600
 
 export default function Home() {
   const plausible = usePlausible()
+  const { isConnected } = useAccount()
   const [msg, setMsg] = useState<string>('')
   const [values, setValues] = useState<number[]>([])
   const [addresses, setAddresses] = useState<string[]>([])
@@ -202,7 +204,7 @@ export default function Home() {
           {msg}
         </Typography>
 
-        {addresses.length > addressesPerTransaction && (
+        {addresses.length > addressesPerTransaction && isConnected && (
           <Typography
             as="p"
             size="base"
@@ -216,15 +218,19 @@ export default function Home() {
         <div className="transactions">
           {addresses.length > 0 &&
             chunk({ addresses, values }, addressesPerTransaction).map(
-              (chunk, index) => (
-                <Transaction
-                  key={index}
-                  index={index + 1}
-                  addresses={chunk.addresses}
-                  values={chunk.values}
-                  setTxnStarted={setTxnStarted}
-                />
-              )
+              (chunk, index) => {
+                if (!isConnected && index > 0) return null
+
+                return (
+                  <Transaction
+                    key={index}
+                    index={index + 1}
+                    addresses={chunk.addresses}
+                    values={chunk.values}
+                    setTxnStarted={setTxnStarted}
+                  />
+                )
+              }
             )}
         </div>
       </main>
