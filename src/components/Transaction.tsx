@@ -54,17 +54,17 @@ export default function Transaction({
 
   const { data: txn, write } = useContractWrite(config)
   const {
-    data: txnReceipt,
     isError: txnIsError,
     isLoading: txnIsPending,
+    isSuccess: txnIsSuccess,
   } = useWaitForTransaction(txn)
 
   useEffect(() => {
-    if (txnIsPending) {
+    if (txn?.hash) {
       setTxnStarted(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txnIsPending])
+  }, [txn?.hash])
 
   if (!isConnected) {
     return (
@@ -111,7 +111,7 @@ export default function Transaction({
     )
   }
 
-  if (txnReceipt) {
+  if (txnIsSuccess) {
     return (
       <Button
         as="a"
@@ -120,7 +120,13 @@ export default function Transaction({
         href={formatEtherscanLink(chain!.id, txn!)}
         style={buttonStyles}
       >
-        Transaction completed!
+        <span
+          style={{
+            color: '#fff',
+          }}
+        >
+          Transaction completed!
+        </span>
       </Button>
     )
   }

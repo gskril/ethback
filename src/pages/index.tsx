@@ -222,7 +222,7 @@ export default function Home() {
                   index={index + 1}
                   addresses={chunk.addresses}
                   values={chunk.values}
-                  setTxnStarted={() => setTxnStarted}
+                  setTxnStarted={setTxnStarted}
                 />
               )
             )}
