@@ -164,7 +164,6 @@ export default function Home() {
               type="number"
               name="start-block"
               id="start-block"
-              step={10000}
               min={0}
               placeholder="15100000"
               label="Start block"
@@ -179,7 +178,6 @@ export default function Home() {
               name="end-block"
               id="end-block"
               placeholder="20000000"
-              step={10000}
               min={0}
               label="End block"
               disabled={txnStarted}
