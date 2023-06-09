@@ -169,7 +169,7 @@ export default function Home() {
               name="start-block"
               id="start-block"
               min={0}
-              placeholder="15100000"
+              placeholder="0"
               label="Start block"
               disabled={txnStarted}
               parentStyles={inputStyles}

@@ -23,7 +23,7 @@ export async function handleSubmit({
   e.preventDefault()
 
   const form = e.target as HTMLFormElement
-  const startBlock: string = form['start-block'].value || '15100000'
+  const startBlock: string = form['start-block'].value || '0'
   const endBlock: string = form['end-block'].value || '20000000'
   const type: ContractFunctions = form['type'].value
   const address: string = form.address.value.toLowerCase()
