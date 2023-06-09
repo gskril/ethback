@@ -13,7 +13,7 @@ import toast from 'react-hot-toast'
 import { TransactionProps } from '../types'
 import disperseAbi from '../contracts/disperse-abi.json'
 import { formatEtherscanLink } from '../utils'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'viem'
 
 const buttonStyles = {
   width: 'fit-content',
@@ -37,13 +37,11 @@ export default function Transaction({
   const { openConnectModal } = useConnectModal()
 
   const { config, error: prepareTxError } = usePrepareContractWrite({
-    addressOrName: '0xD152f549545093347A162Dce210e7293f1452150',
-    contractInterface: disperseAbi,
+    address: '0xD152f549545093347A162Dce210e7293f1452150',
+    abi: disperseAbi,
     functionName: 'disperseEther',
     args: [addresses, weiValues],
-    overrides: {
-      value: parseEther(`${totalEth + 0.001}`), // add some buffer
-    },
+    value: parseEther(`${totalEth + 0.001}`), // add some buffer
     onError: (err) => {
       const msg = err.message.includes('insufficient funds')
         ? 'Insufficient funds'

@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@ensdomains/thorin": "^0.6.20",
-    "@rainbow-me/rainbowkit": "^0.7.1",
-    "ethers": "^5.7.1",
+    "@rainbow-me/rainbowkit": "^1.0.1",
     "got": "^12.5.1",
     "next": "12.3.1",
     "next-plausible": "^3.6.3",
@@ -20,7 +19,8 @@
     "react-hot-toast": "^2.4.0",
     "react-transition-state": "^2.0.2",
     "styled-components": "^5.3.6",
-    "wagmi": "^0.6.8"
+    "viem": "^1.0.1",
+    "wagmi": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "18.8.3",
