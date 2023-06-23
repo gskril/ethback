@@ -29,25 +29,25 @@ export default async function handler(
     100
   `
 
-  let rows = [] as any;
-  let meta = {} as any;
+  let rows = [] as any
+  let meta = {} as any
 
   // Loop though 10 pages of 100 records each
-  for (let i=0; i<10; i++) {
+  for (let i = 0; i < 10; i++) {
     const data: SortResponse = await got
-    .post('https://api.sort.xyz/v1/queries/run', {
-      headers: {
-        'x-api-key': process.env.SORT_API_KEY,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      json: { 
-        query : sortQuery + ` OFFSET ${i*100}`,
-      },
-    })
-    .json()
+      .post('https://api.sort.xyz/v1/queries/run', {
+        headers: {
+          'x-api-key': process.env.SORT_API_KEY,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        json: {
+          query: sortQuery + ` OFFSET ${i * 100}`,
+        },
+      })
+      .json()
 
-    rows = rows.concat(data.data.records);
+    rows = rows.concat(data.data.records)
     meta = data.data
   }
 
