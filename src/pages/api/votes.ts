@@ -26,7 +26,7 @@ export default async function handler(
   order by
     b.timestamp desc
   LIMIT
-    1000
+    100
   `
 
   let i = 0
