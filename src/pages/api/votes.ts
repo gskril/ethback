@@ -29,11 +29,13 @@ export default async function handler(
     100
   `
 
+  let i = 0
   let rows = [] as any
   let meta = {} as any
+  let recordCount = undefined
 
-  // Loop though 10 pages of 100 records each
-  for (let i = 0; i < 10; i++) {
+  // Iterate through all the pages of results
+  while (recordCount !== 0) {
     const data: SortResponse = await got
       .post('https://api.sort.xyz/v1/queries/run', {
         headers: {
@@ -47,8 +49,10 @@ export default async function handler(
       })
       .json()
 
+    i++
     rows = rows.concat(data.data.records)
     meta = data.data
+    recordCount = meta.recordCount
   }
 
   res.status(200).json({ rows, meta })
