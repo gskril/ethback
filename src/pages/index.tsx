@@ -189,7 +189,12 @@ export default function Home() {
             />
           </div>
 
-          <Button tone="accent" type="submit" disabled={txnStarted}>
+          <Button
+            tone="accent"
+            type="submit"
+            disabled={txnStarted}
+            loading={msg === 'Fetching gas costs...'}
+          >
             Fetch gas costs
           </Button>
         </form>
