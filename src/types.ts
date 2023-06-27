@@ -18,20 +18,13 @@ export type Response = {
 }
 
 export type SortResponse = {
-  id: string
-  success: number
-  query_response: {
-    collections: string[]
-    aliases: string[]
-    column_fields: Object[]
-
-    results: Response[]
-    query_id: string
-    stats: {
-      elapsed_time_ms: number
-      throttled_time_micros: number
-    }
-    status: string
+  code: number
+  data: {
+    durationMs: number
+    id: string
+    query: string
+    records: Response[]
+    recordCount: number
   }
 }
 
